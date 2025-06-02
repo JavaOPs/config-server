@@ -1,7 +1,9 @@
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
+//    id 'org.springframework.boot' version '3.5.0'
     id 'io.spring.dependency-management' version '1.1.5'
+//    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'ru.javaops.cloudjava'
@@ -17,6 +19,7 @@ repositories {
 
 ext {
     springCloudVersion ='2023.0.1'
+//    springCloudVersion ='2025.0.0'
 }
 
 dependencies {
@@ -33,9 +36,15 @@ dependencyManagement {
 
 bootBuildImage {
     imageName = "${project.name}"
+    createdDate = "now"
     environment["BP_JVM_VERSION"] = "17.*"
     environment["BP_HEALTH_CHECKER_ENABLED"] = "true"
-    buildpacks = ["urn:cnb:builder:paketo-buildpacks/java", "gcr.io/paketo-buildpacks/health-checker:1"]
+    buildpacks = ["urn:cnb:builder:paketo-buildpacks/java", "docker.io/paketobuildpacks/health-checker:1"]
+/*
+    docker {
+        host = "//./pipe/dockerDesktopLinuxEngine"
+    }
+*/
 }
 
 tasks.named('test') {
